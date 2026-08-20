@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  html, body { margin:0; padding:0; background:#f5f5f4; }
+  * { box-sizing: border-box; }
+  a { color:#2563eb; text-decoration:none; }
+  a:hover { color:#1d4ed8; text-decoration:underline; }
+</style>
+</helmet>
+<div style="background:#f5f5f4;color:#1c1917;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.55;padding:48px 36px 110px;display:flex;flex-direction:column;align-items:center;text-wrap:pretty;-webkit-font-smoothing:antialiased">
+<div style="width:100%;max-width:1240px;display:flex;flex-direction:column;gap:48px">
+
+  <header style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span style="display:inline-flex;align-items:center;border-radius:9999px;padding:2px 10px;font-size:12px;font-weight:500;background:#dbeafe;color:#172554">Marigold RUI</span>
+      <span style="display:inline-flex;align-items:center;border-radius:9999px;padding:2px 10px;font-size:12px;font-weight:500;background:#fafaf9;border:1px solid rgba(12,10,9,0.13);color:#1c1917">Venue-Freigabe · ACC</span>
+      <span style="display:inline-flex;align-items:center;border-radius:9999px;padding:2px 10px;font-size:12px;font-weight:500;background:#fafaf9;border:1px solid rgba(12,10,9,0.13);color:#1c1917">9 Screens</span>
+    </div>
+    <h1 style="margin:0;font-size:30px;line-height:1.2;font-weight:600;letter-spacing:-0.02em">Venue-Freigabe: Liste, Drawer, Massenfreigabe, Leerzustände</h1>
+    <p style="margin:0;max-width:80ch;color:#57534e;font-size:15px">Alle Elemente auf Marigold-Tokens und -Komponenten umgestellt: Surface über Page-Background, <em>ui-control</em>-Ränder an Feldern, Badge-Varianten für Status, Tabs mit Unterstreichung, SectionMessage für Hinweise. Was von F2 (verschobenes Event) abhängt, ist ausgelassen und in Screen 07 als Platzhalter vermerkt.</p>
+  </header>
+
+  <!-- W1 -->
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#57534e">01</span>
+      <h2 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.01em">Liste „Offen“ — Ausgangszustand</h2>
+      <span style="font-size:13px;color:#57534e">gruppiert nach Venue · 3 offene Freigaben</span>
+    </div>
+    <div style="border:1px solid rgba(12,10,9,0.13);background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(12,10,9,0.04)">
+
+      <div style="display:flex;gap:4px;align-items:center;padding:10px 20px;border-bottom:1px solid rgba(12,10,9,0.14);background:#fff">
+        <div style="width:78px;height:14px;background:#e7e5e4;border-radius:4px"></div>
+        <div style="flex:1"></div>
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="2">
+          <div style="font-size:13.5px;color:#57534e;padding:7px 12px;border-radius:6px">{{ n }}</div>
+        </sc-for>
+        <div style="font-size:13.5px;color:#1c1917;font-weight:600;padding:7px 12px;display:flex;gap:8px;align-items:center;position:relative">
+          Einlass
+          <span style="display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:9999px;background:#dc2626;color:#fff;font-size:11.5px;font-weight:600;line-height:1">3</span>
+        </div>
+        <sc-for list="{{ navAfter }}" as="n" hint-placeholder-count="2">
+          <div style="font-size:13.5px;color:#57534e;padding:7px 12px;border-radius:6px">{{ n }}</div>
+        </sc-for>
+        <div style="width:28px;height:28px;border-radius:9999px;background:#e7e5e4;margin-left:10px"></div>
+      </div>
+
+      <div style="display:flex;gap:2px;align-items:center;padding:0 20px;border-bottom:1px solid rgba(12,10,9,0.14);background:#fff">
+        <sc-for list="{{ subNav }}" as="s" hint-placeholder-count="3">
+          <div style="font-size:13.5px;color:#57534e;padding:12px 12px;border-bottom:2px solid transparent">{{ s }}</div>
+        </sc-for>
+        <div style="font-size:13.5px;color:#1c1917;font-weight:600;padding:12px 12px;border-bottom:2px solid #1c1917;display:flex;gap:8px;align-items:center">
+          Externe Systeme
+          <span style="display:inline-flex;align-items:center;gap:5px;border-radius:9999px;padding:1px 9px;font-size:11.5px;font-weight:600;background:#fee2e2;color:#450a0a">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:9999px;background:#dc2626;color:#fff;font-size:9.5px;font-weight:700;line-height:1;flex:none">!</span>3
+          </span>
+        </div>
+      </div>
+
+      <div style="padding:24px 20px 26px;display:flex;flex-direction:column;gap:24px;background:#f5f5f4">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="font-size:22px;font-weight:600;letter-spacing:-0.01em">Freigaben</div>
+          <div style="font-size:13.5px;color:#57534e;max-width:78ch">Events, die an die Zutrittskontrolle einer Venue freigegeben werden müssen. Zeigt Events ab 04.08.2026 sowie Events mit laufenden Scanzeiten.</div>
+        </div>
+
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <div style="display:flex;gap:2px;background:rgba(12,10,9,0.06);border-radius:8px;padding:3px">
+            <div style="padding:6px 14px;font-size:13px;background:#fff;border-radius:6px;font-weight:600;box-shadow:0 1px 2px rgba(12,10,9,0.08)">Offen (3)</div>
+            <div style="padding:6px 14px;font-size:13px;color:#57534e">Erteilt (14)</div>
+            <div style="padding:6px 14px;font-size:13px;color:#57534e">Verlauf</div>
+          </div>
+          <div style="flex:1;min-width:200px;max-width:340px;height:36px;display:flex;align-items:center;gap:8px;border:1px solid rgba(12,10,9,0.26);border-radius:8px;padding:0 12px;font-size:13.5px;color:#57534e;background:#fff">
+            <span style="opacity:0.6">⌕</span>Suche nach Event-Name oder ID
+          </div>
+        </div>
+
+        <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+          <div style="border:1px solid rgba(12,10,9,0.13);border-radius:12px;background:#fff;overflow:hidden;box-shadow:0 1px 2px rgba(12,10,9,0.04)">
+            <div style="display:flex;gap:12px;align-items:center;padding:14px 16px;background:#fafaf9;border-bottom:1px solid rgba(12,10,9,0.14)">
+              <div style="width:16px;height:16px;border:1px solid rgba(12,10,9,0.26);border-radius:4px;background:#fff;flex:none"></div>
+              <div style="display:flex;flex-direction:column;gap:1px">
+                <span style="font-weight:600;font-size:14.5px">{{ g.venue }}</span>
+                <span style="font-size:12.5px;color:#57534e">Venue-Betreiber: {{ g.vb }}</span>
+              </div>
+              <div style="flex:1"></div>
+              <sc-if value="{{ g.warn }}" hint-placeholder-val="{{ true }}">
+                <span style="display:inline-flex;align-items:center;gap:6px;border-radius:9999px;padding:3px 10px;font-size:12px;font-weight:500;background:#fee2e2;color:#450a0a">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:9999px;background:#dc2626;color:#fff;font-size:10px;font-weight:700;line-height:1;flex:none">!</span>{{ g.warn }}
+                </span>
+              </sc-if>
+              <span style="font-size:12.5px;color:#57534e">{{ g.count }}</span>
+            </div>
+            <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:28px 1fr 110px 190px 160px 100px;gap:12px;align-items:center;padding:13px 16px;border-bottom:1px solid rgba(12,10,9,0.14)">
+                <div style="width:16px;height:16px;border:1px solid rgba(12,10,9,0.26);border-radius:4px;background:#fff;flex:none"></div>
+                <div style="display:flex;gap:9px;align-items:center">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:9999px;background:{{ r.markBg }};color:{{ r.markColor }};font-size:11px;font-weight:700;line-height:1;flex:none">{{ r.mark }}</span>
+                  <span style="font-size:14px;font-weight:{{ r.weight }}">{{ r.event }}</span>
+                </div>
+                <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:#57534e">{{ r.id }}</span>
+                <span style="font-size:13.5px;color:#44403c">{{ r.date }}</span>
+                <span style="display:inline-flex;align-items:center;border-radius:9999px;padding:2px 10px;font-size:12px;font-weight:{{ r.weight }};background:{{ r.statusBg }};border:{{ r.statusBorder }};color:{{ r.statusColor }};justify-self:start">{{ r.status }}</span>
+                <span style="font-size:13.5px;color:#2563eb;justify-self:end;font-weight:500">{{ r.action }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+
+        <div style="display:flex;gap:14px;align-items:center;background:#1c1917;color:#fafaf9;border-radius:10px;padding:10px 12px 10px 16px;box-shadow:0 1px 2px rgba(12,10,9,0.06),0 8px 24px rgba(12,10,9,0.18)">
+          <div style="width:16px;height:16px;border-radius:4px;background:#fafaf9;color:#1c1917;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:none">✓</div>
+          <span style="font-size:13.5px;font-weight:500">5 Events ausgewählt</span>
+          <div style="flex:1"></div>
+          <span style="font-size:13.5px;color:#d6d3d1">Auswahl aufheben</span>
+          <div style="background:#fafaf9;color:#1c1917;border-radius:8px;padding:0 16px;height:36px;display:flex;align-items:center;font-size:13.5px;font-weight:600">5 Events freigeben</div>
+        </div>
+        <div style="font-size:12.5px;color:#57534e">ActionBar — erscheint nur bei Auswahl, schwebt am unteren Rand der Liste.</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">
+      <sc-for list="{{ notes1 }}" as="n" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:13px;color:#57534e"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:#a8a29e">{{ n.n }}</span>{{ n.t }}</div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- W2 -->
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#57534e">02</span>
+      <h2 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.01em">Drawer · Zustand A — Venue noch nicht berechtigt</h2>
+      <span style="font-size:13px;color:#57534e">Prüfansicht mit drei Zeitfeldern</span>
+    </div>
+    <div style="display:flex;border-radius:12px;overflow:hidden;background:#f5f5f4;min-height:540px;border:1px solid rgba(12,10,9,0.13)">
+      <div style="flex:1;background:rgba(12,10,9,0.45);padding:24px;display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:12.5px;color:#fafaf9;opacity:0.8">Liste bleibt sichtbar, überlagert von overlay-backdrop</div>
+        <sc-for list="{{ dimRows }}" as="d" hint-placeholder-count="5">
+          <div style="height:38px;background:rgba(255,255,255,0.28);border-radius:8px"></div>
+        </sc-for>
+      </div>
+      <div style="width:490px;background:#fff;display:flex;flex-direction:column;box-shadow:-8px 0 24px rgba(12,10,9,0.12)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:20px 22px;border-bottom:1px solid rgba(12,10,9,0.14)">
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <span style="font-size:17px;font-weight:600;letter-spacing:-0.01em">Robert Grün – Tour 2026</span>
+            <span style="font-size:13px;color:#57534e">ID 884-2201 · Fr 04.09.2026, 20:00</span>
+            <span style="font-size:13px;color:#44403c">Kulturhalle Ulm</span>
+          </div>
+          <span style="font-size:15px;color:#57534e;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px;flex:none">✕</span>
+        </div>
+        <div style="padding:20px 22px;display:flex;flex-direction:column;gap:22px;flex:1">
+          <div style="border:1px solid #2563eb;background:#dbeafe;border-radius:10px;padding:12px 14px;display:flex;gap:10px">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:9999px;background:#2563eb;color:#fff;font-size:10px;font-weight:700;line-height:1;flex:none;margin-top:2px">i</span>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <span style="font-size:12.5px;font-weight:600;color:#172554">Empfänger</span>
+              <span style="font-size:13px;color:#172554">Zutrittskontrolle der Venue <strong>Kulturhalle Ulm</strong>, betrieben von <strong>Stadtwerke Ulm Event GmbH</strong></span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:12.5px;font-weight:600;color:#44403c">Was übermittelt wird</span>
+            <div style="border:1px solid rgba(12,10,9,0.13);border-radius:10px;background:#fafaf9;padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ rights }}" as="r" hint-placeholder-count="4">
+                <div style="display:flex;gap:9px;align-items:center;font-size:13.5px">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:9999px;background:{{ r.iconBg }};color:{{ r.iconColor }};font-size:10px;font-weight:700;line-height:1;flex:none">{{ r.mark }}</span>
+                  <span style="color:{{ r.color }}">{{ r.label }}</span>
+                </div>
+              </sc-for>
+              <span style="font-size:12.5px;color:#57534e;border-top:1px solid rgba(12,10,9,0.14);padding-top:9px">Die Rechte sind für diese Venue festgelegt und hier nicht änderbar.</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <span style="font-size:12.5px;font-weight:600;color:#44403c">Zeitfenster</span>
+            <sc-for list="{{ fields }}" as="f" hint-placeholder-count="3">
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <span style="font-size:13px;font-weight:500">{{ f.label }}</span>
+                <div style="display:flex;gap:10px;align-items:center">
+                  <div style="border:1px solid rgba(12,10,9,0.26);border-radius:8px;height:36px;display:flex;align-items:center;padding:0 12px;font-size:13.5px;background:#fff;min-width:{{ f.w }}">{{ f.value }}</div>
+                  <span style="font-size:12.5px;color:#57534e">{{ f.resolved }}</span>
+                </div>
+                <span style="font-size:12.5px;color:#57534e">{{ f.hint }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(12,10,9,0.14);padding:16px 22px;display:flex;gap:10px;align-items:center;background:#fafaf9">
+          <div style="background:#1c1917;color:#fafaf9;border-radius:8px;height:36px;padding:0 16px;display:flex;align-items:center;font-size:13.5px;font-weight:600">Venue berechtigen</div>
+          <div style="background:linear-gradient(#ffffff,#f5f5f4);border:1px solid #d6d3d1;border-radius:8px;height:36px;padding:0 16px;display:flex;align-items:center;font-size:13.5px;font-weight:500;color:#1c1917">Abbrechen</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">
+      <sc-for list="{{ notes2 }}" as="n" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:13px;color:#57534e"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:#a8a29e">{{ n.n }}</span>{{ n.t }}</div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- W3 -->
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#57534e">03</span>
+      <h2 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.01em">Drawer · Zustand B — Venue bereits berechtigt</h2>
+      <span style="font-size:13px;color:#57534e">read-only · nur entziehen</span>
+    </div>
+    <div style="display:flex;border-radius:12px;overflow:hidden;background:#f5f5f4;min-height:540px;border:1px solid rgba(12,10,9,0.13)">
+      <div style="flex:1;background:rgba(12,10,9,0.45);padding:24px;display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:12.5px;color:#fafaf9;opacity:0.8">Aufruf aus „Erteilt“</div>
+        <sc-for list="{{ dimRows }}" as="d" hint-placeholder-count="5">
+          <div style="height:38px;background:rgba(255,255,255,0.28);border-radius:8px"></div>
+        </sc-for>
+      </div>
+      <div style="width:490px;background:#fff;display:flex;flex-direction:column;box-shadow:-8px 0 24px rgba(12,10,9,0.12)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:20px 22px;border-bottom:1px solid rgba(12,10,9,0.14)">
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <span style="font-size:17px;font-weight:600;letter-spacing:-0.01em">Robert Grün – Tour 2026</span>
+            <span style="font-size:13px;color:#57534e">ID 884-2207 · Sa 20.09.2026, 20:00</span>
+            <span style="font-size:13px;color:#44403c">Stadthalle Kassel</span>
+          </div>
+          <span style="font-size:15px;color:#57534e;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px;flex:none">✕</span>
+        </div>
+        <div style="padding:20px 22px;display:flex;flex-direction:column;gap:20px;flex:1">
+          <div style="border:1px solid #16a34a;background:#dcfce7;border-radius:10px;padding:12px 14px;display:flex;gap:10px">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:9999px;background:#16a34a;color:#fff;font-size:10px;font-weight:700;line-height:1;flex:none;margin-top:2px">✓</span>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <span style="font-size:13px;font-weight:600;color:#052e16">Freigegeben · Tickets lesbar ab 06.09.2026</span>
+              <span style="font-size:13px;color:#052e16">Die Venue sieht das Event bereits, Tickets noch nicht.</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:12.5px;font-weight:600;color:#44403c">Empfänger</span>
+            <span style="font-size:13.5px">Zutrittskontrolle der Venue <strong>Stadthalle Kassel</strong>, betrieben von <strong>Kassel Event Service GmbH</strong></span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:12.5px;font-weight:600;color:#44403c">Erteilte Einstellungen</span>
+            <div style="border:1px solid rgba(12,10,9,0.13);border-radius:10px;overflow:hidden">
+              <sc-for list="{{ granted }}" as="g" hint-placeholder-count="5">
+                <div style="display:grid;grid-template-columns:1fr 1.05fr;gap:10px;padding:10px 14px;border-bottom:1px solid rgba(12,10,9,0.14);font-size:13px;background:#fff">
+                  <span style="color:#57534e">{{ g.k }}</span><span style="color:#1c1917">{{ g.v }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <span style="font-size:12.5px;color:#57534e">Freigegeben am 12.03.2026, 09:41 von M. Berger</span>
+        </div>
+        <div style="border-top:1px solid rgba(12,10,9,0.14);padding:16px 22px;display:flex;flex-direction:column;gap:10px;background:#fafaf9">
+          <div style="display:flex;gap:10px;align-items:center">
+            <div style="background:#dc2626;color:#fff;border-radius:8px;height:36px;padding:0 16px;display:flex;align-items:center;font-size:13.5px;font-weight:600">Berechtigung entziehen</div>
+            <div style="background:linear-gradient(#ffffff,#f5f5f4);border:1px solid #d6d3d1;border-radius:8px;height:36px;padding:0 16px;display:flex;align-items:center;font-size:13.5px;font-weight:500;color:#1c1917">Schließen</div>
+          </div>
+          <span style="font-size:12.5px;color:#57534e">Kein Bearbeiten: Zum Ändern entziehen und mit neuen Werten erneut freigeben (Werte werden vorbelegt).</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- W4 -->
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#57534e">04</span>
+      <h2 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.01em">Massen-Bestätigungsdialog</h2>
+      <span style="font-size:13px;color:#57534e">5 Events · 2 Venues · ein Zeitfenster</span>
+    </div>
+    <div style="border-radius:12px;background:rgba(12,10,9,0.45);padding:44px 24px;display:flex;justify-content:center">
+      <div style="width:620px;background:#fff;border-radius:12px;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(12,10,9,0.06),0 12px 32px rgba(12,10,9,0.22)">
+        <div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:19px;font-weight:600;letter-spacing:-0.01em">5 Events freigeben?</span>
+          <span style="font-size:13.5px;color:#57534e">Die Zutrittskontrollen der folgenden Venues erhalten Zugriff auf die ausgewählten Events. Für alle gilt dasselbe Zeitfenster.</span>
+        </div>
+        <div style="padding:20px 24px;display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ bulkVenues }}" as="b" hint-placeholder-count="2">
+            <div style="border:1px solid rgba(12,10,9,0.13);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;background:#fafaf9">
+              <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+                <span style="font-size:14px;font-weight:600">{{ b.venue }}</span>
+                <span style="display:inline-flex;align-items:center;border-radius:9999px;padding:2px 10px;font-size:12px;font-weight:500;background:#fff;border:1px solid rgba(12,10,9,0.13);color:#1c1917">{{ b.count }}</span>
+              </div>
+              <span style="font-size:13px;color:#57534e">Betreiber: {{ b.vb }}</span>
+              <span style="font-size:13px;color:#57534e">Übermittelt: {{ b.data }}</span>
+            </div>
+          </sc-for>
+          <div style="border:1px solid #2563eb;background:#dbeafe;border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:2px">
+            <span style="font-size:12.5px;font-weight:600;color:#172554">Zeitfenster für alle 5</span>
+            <span style="font-size:13px;color:#172554">Gültig ab heute · Tickets 14 Tage vor Beginn lesbar · endet 7 Tage nach dem jeweiligen Event</span>
+          </div>
+        </div>
+        <div style="padding:0 24px 20px;display:flex;gap:10px;justify-content:flex-end">
+          <div style="background:linear-gradient(#ffffff,#f5f5f4);border:1px solid #d6d3d1;border-radius:8px;height:36px;padding:0 16px;display:flex;align-items:center;font-size:13.5px;font-weight:500;color:#1c1917">Abbrechen</div>
+          <div style="background:#1c1917;color:#fafaf9;border-radius:8px;height:36px;padding:0 16px;display:flex;align-items:center;font-size:13.5px;font-weight:600">5 Events freigeben</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">
+      <sc-for list="{{ notes4 }}" as="n" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:13px;color:#57534e"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:#a8a29e">{{ n.n }}</span>{{ n.t }}</div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- W5 + W6 -->
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#57534e">05 / 06</span>
+      <h2 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.01em">Die zwei Leerzustände</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:20px">
+      <sc-for list="{{ empties }}" as="e" hint-placeholder-count="2">
+        <div style="border:1px solid rgba(12,10,9,0.13);border-radius:12px;background:#fff;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 2px rgba(12,10,9,0.04)">
+          <div style="padding:12px 18px;border-bottom:1px solid rgba(12,10,9,0.14);display:flex;gap:10px;align-items:center">
+            <span style="font-size:12.5px;color:#57534e">{{ e.tag }}</span>
+            <div style="flex:1"></div>
+            <span style="font-size:13px;color:#1c1917;font-weight:600">Einlass › Externe Systeme</span>
+          </div>
+          <div style="padding:22px 20px 30px;display:flex;flex-direction:column;gap:18px;flex:1;background:#f5f5f4">
+            <div style="font-size:19px;font-weight:600;letter-spacing:-0.01em">Freigaben</div>
+            <sc-if value="{{ e.showTabs }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;gap:2px;background:rgba(12,10,9,0.06);border-radius:8px;padding:3px;align-self:flex-start">
+                <div style="padding:6px 12px;font-size:13px;background:#fff;border-radius:6px;font-weight:600;box-shadow:0 1px 2px rgba(12,10,9,0.08)">Offen (0)</div>
+                <div style="padding:6px 12px;font-size:13px;color:#57534e">Erteilt (14)</div>
+                <div style="padding:6px 12px;font-size:13px;color:#57534e">Verlauf</div>
+              </div>
+            </sc-if>
+            <div style="border:1px solid rgba(12,10,9,0.13);background:#fff;border-radius:12px;padding:36px 28px;display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+              <span style="font-size:16px;font-weight:600;max-width:38ch;letter-spacing:-0.01em">{{ e.head }}</span>
+              <span style="font-size:13.5px;color:#57534e;max-width:52ch">{{ e.body }}</span>
+              <sc-if value="{{ e.link }}" hint-placeholder-val="{{ true }}">
+                <span style="font-size:13.5px;color:#2563eb;font-weight:500;margin-top:4px">{{ e.link }}</span>
+              </sc-if>
+            </div>
+            <span style="font-size:12.5px;color:#57534e">{{ e.note }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- W6b Warn-Kette -->
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#57534e">06b</span>
+      <h2 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.01em">Warn-Kette: wie die Warnung nach oben wandert</h2>
+      <span style="font-size:13px;color:#57534e">ein Symbol, drei Badge-Varianten</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+      <sc-for list="{{ chain }}" as="c" hint-placeholder-count="4">
+        <div style="border:1px solid rgba(12,10,9,0.13);background:#fff;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 2px rgba(12,10,9,0.04)">
+          <span style="font-size:12px;color:#57534e;font-weight:500">{{ c.level }}</span>
+          <div style="display:flex;gap:8px;align-items:center;min-height:28px;flex-wrap:wrap">
+            <sc-if value="{{ c.bare }}" hint-placeholder-val="{{ true }}">
+              <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:9999px;background:#dc2626;color:#fff;font-size:11px;font-weight:700;line-height:1;flex:none">!</span>
+            </sc-if>
+            <span style="font-size:14px;font-weight:600;color:#1c1917;border-bottom:2px solid {{ c.underline }};padding-bottom:2px">{{ c.label }}</span>
+            <sc-if value="{{ c.subtle }}" hint-placeholder-val="{{ true }}">
+              <span style="display:inline-flex;align-items:center;gap:6px;border-radius:9999px;padding:3px 10px;font-size:12px;font-weight:500;background:#fee2e2;color:#450a0a">
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:9999px;background:#dc2626;color:#fff;font-size:10px;font-weight:700;line-height:1;flex:none">!</span>{{ c.badge }}
+              </span>
+            </sc-if>
+            <sc-if value="{{ c.bold }}" hint-placeholder-val="{{ true }}">
+              <span style="display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:9999px;background:#dc2626;color:#fff;font-size:11.5px;font-weight:600;line-height:1">{{ c.badge }}</span>
+            </sc-if>
+          </div>
+          <span style="font-size:13px;color:#57534e">{{ c.rule }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">
+      <sc-for list="{{ notesChain }}" as="n" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:13px;color:#57534e"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:#a8a29e">{{ n.n }}</span>{{ n.t }}</div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- W8 Sichtbarkeit -->
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#57534e">08</span>
+      <h2 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.01em">Für wen ist die Warnung sichtbar?</h2>
+      <span style="font-size:13px;color:#57534e">Empfehlung: sichtbar für alle, handeln nur mit Recht</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:20px">
+      <sc-for list="{{ roles }}" as="r" hint-placeholder-count="2">
+        <div style="border:1px solid rgba(12,10,9,0.13);background:#fff;border-radius:12px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 2px rgba(12,10,9,0.04)">
+          <div style="padding:14px 18px;border-bottom:1px solid rgba(12,10,9,0.14);display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <span style="font-size:14.5px;font-weight:600">{{ r.role }}</span>
+            <div style="flex:1"></div>
+            <span style="display:inline-flex;align-items:center;border-radius:9999px;padding:2px 10px;font-size:12px;font-weight:500;background:{{ r.tagBg }};color:{{ r.tagColor }}">{{ r.tag }}</span>
+          </div>
+          <div style="padding:18px;display:flex;flex-direction:column;gap:16px;flex:1;background:#f5f5f4">
+            <div style="display:flex;gap:8px;align-items:center;border:1px solid rgba(12,10,9,0.13);background:#fff;border-radius:10px;padding:10px 14px">
+              <span style="font-size:13.5px;font-weight:600">Einlass</span>
+              <sc-if value="{{ r.badge }}" hint-placeholder-val="{{ true }}">
+                <span style="display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:9999px;background:#dc2626;color:#fff;font-size:11.5px;font-weight:600;line-height:1">3</span>
+              </sc-if>
+              <span style="font-size:12.5px;color:#57534e">{{ r.badgeNote }}</span>
+            </div>
+            <div style="border:1px solid rgba(12,10,9,0.13);background:#fff;border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center">
+                <div style="display:flex;gap:8px;align-items:center">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:9999px;background:#dc2626;color:#fff;font-size:11px;font-weight:700;line-height:1;flex:none">!</span>
+                  <span style="font-size:13.5px;font-weight:600">Robert Grün – Tour 2026</span>
+                </div>
+                <span style="font-size:13px;color:{{ r.actionColor }};font-weight:{{ r.actionWeight }}">{{ r.action }}</span>
+              </div>
+              <span style="font-size:12.5px;color:#57534e;border-top:1px solid rgba(12,10,9,0.14);padding-top:9px">{{ r.hint }}</span>
+            </div>
+            <span style="font-size:13px;color:#44403c">{{ r.rationale }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="border:1px solid #a16207;background:#fef9c3;border-radius:10px;padding:14px 16px;display:flex;gap:10px;max-width:96ch">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:9999px;background:#a16207;color:#fff;font-size:10px;font-weight:700;line-height:1;flex:none;margin-top:2px">!</span>
+      <div style="display:flex;flex-direction:column;gap:3px">
+        <span style="font-size:13px;font-weight:600;color:#422006">Empfehlung zu F1</span>
+        <span style="font-size:13.5px;color:#422006">Die Warnung sehen alle, die den Einlass-Bereich öffnen dürfen — ein fehlender Einlass ist ein operatives Risiko, das auch Kollegen ohne Freigabe-Recht eskalieren müssen. Nur die Aktion ist rechtegebunden; ohne Recht steht statt „Freigeben“ ein Verweis auf die zuständige Person. Alternative (Badge nur mit Recht) hätte den Vorteil, dass niemand eine Warnung sieht, die er nicht auflösen kann — birgt aber das Risiko, dass am Eventtag niemand hinsieht.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- W9 Nutzungsvertrag -->
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#57534e">09</span>
+      <h2 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.01em">Absicherung: nur mit gültigem Nutzungsvertrag</h2>
+      <span style="font-size:13px;color:#57534e">drei Zustände, die die UX abdecken muss</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px">
+      <sc-for list="{{ contract }}" as="c" hint-placeholder-count="3">
+        <div style="border:1px solid rgba(12,10,9,0.13);background:#fff;border-radius:12px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 2px rgba(12,10,9,0.04)">
+          <div style="padding:12px 16px;border-bottom:1px solid rgba(12,10,9,0.14);display:flex;gap:8px;align-items:center">
+            <span style="display:inline-flex;align-items:center;gap:7px;border-radius:9999px;padding:3px 11px;font-size:12.5px;font-weight:600;background:{{ c.badgeBg }};color:{{ c.badgeColor }}">
+              <span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:9999px;background:{{ c.iconBg }};color:#fff;font-size:9.5px;font-weight:700;line-height:1;flex:none">{{ c.mark }}</span>{{ c.state }}
+            </span>
+          </div>
+          <div style="padding:18px 16px;display:flex;flex-direction:column;gap:12px;flex:1;background:#f5f5f4">
+            <span style="font-size:14.5px;font-weight:600;max-width:34ch">{{ c.head }}</span>
+            <span style="font-size:13px;color:#57534e">{{ c.body }}</span>
+            <div style="border:1px solid rgba(12,10,9,0.13);background:#fff;border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:12px;font-weight:600;color:#44403c">Verhalten der Aktion</span>
+              <span style="font-size:13px;color:#1c1917">{{ c.behaviour }}</span>
+            </div>
+            <span style="font-size:12.5px;color:#57534e;margin-top:auto">{{ c.note }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">
+      <sc-for list="{{ notesContract }}" as="n" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:13px;color:#57534e"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:#a8a29e">{{ n.n }}</span>{{ n.t }}</div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- W7 offene Stellen -->
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+      <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#57534e">07</span>
+      <h2 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.01em">Bewusst offen gelassen — wartet auf F2</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+      <sc-for list="{{ pending }}" as="p" hint-placeholder-count="2">
+        <div style="border:1px dashed rgba(12,10,9,0.26);border-radius:12px;background:#fafaf9;padding:18px 20px;display:flex;flex-direction:column;gap:8px">
+          <span style="display:inline-flex;align-items:center;border-radius:9999px;padding:2px 10px;font-size:12px;font-weight:500;background:#fff;border:1px solid rgba(12,10,9,0.13);color:#1c1917;align-self:flex-start">{{ p.q }}</span>
+          <span style="font-size:14.5px;font-weight:600">{{ p.title }}</span>
+          <span style="font-size:13px;color:#57534e">{{ p.body }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid rgba(12,10,9,0.14);padding-top:20px;font-size:12.5px;color:#57534e;display:flex;gap:24px;flex-wrap:wrap">
+    <span>Marigold RUI · Tokens statt Hex</span><span>Texte final zu prüfen mit Laura</span><span>Struktur zu prüfen mit Peer</span>
+  </footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1320}}">
+class Component extends DCLogic {
+  renderVals() {
+    const warnRow = {
+      mark: "!", markBg: "#dc2626", markColor: "#fff", weight: "600",
+      status: "Freigabe fehlt", statusBg: "#fee2e2", statusBorder: "none", statusColor: "#450a0a",
+      action: "Freigeben"
+    };
+    const okRow = {
+      mark: "·", markBg: "transparent", markColor: "#a8a29e", weight: "400",
+      statusBg: "#fafaf9", statusBorder: "1px solid rgba(12,10,9,0.13)", statusColor: "#44403c",
+      action: "Details"
+    };
+    return {
+      nav: ["Veranstaltungen", "Verkauf"],
+      navAfter: ["Statistik", "Einstellungen"],
+      subNav: ["Übersicht", "Scanzeiten", "Geräte"],
+
+      groups: [
+        { venue: "Kulturhalle Ulm", vb: "Stadtwerke Ulm Event GmbH", count: "0 von 3 freigegeben", warn: "3 brauchen Freigabe",
+          rows: [
+            { ...warnRow, event: "Robert Grün – Tour 2026", id: "884-2201", date: "Fr 04.09.2026, 20:00" },
+            { ...warnRow, event: "Robert Grün – Tour 2026 (Zusatzshow)", id: "884-2202", date: "Sa 05.09.2026, 20:00" },
+            { ...warnRow, event: "Kabarett Spätschicht", id: "884-3310", date: "Do 17.09.2026, 19:30" }
+          ] },
+        { venue: "Stadthalle Kassel", vb: "Kassel Event Service GmbH", count: "2 von 2 freigegeben", warn: "",
+          rows: [
+            { ...okRow, event: "Robert Grün – Tour 2026", id: "884-2207", date: "Sa 20.09.2026, 20:00", status: "Tickets ab 06.09." },
+            { ...okRow, event: "Nachtprogramm Kassel", id: "884-4412", date: "So 21.09.2026, 22:00", status: "Aktiv bis 28.09." }
+          ] }
+      ],
+
+      notes1: [
+        { n: "N1", t: "Destructive-Badge plus Icon plus fetter Eventname — der Status ist nie nur farbig codiert (Rot-Grün-Schwäche)." },
+        { n: "N2", t: "Die Warnung wird nach oben durchgereicht: Zeile → Gruppen-Header → Tab „Externe Systeme“ → Top-Level „Einlass“." },
+        { n: "N3", t: "Der Zähler in den Tabs zählt Events, nicht Venues — die Zahl im Badge und die Zahl im Filter „Offen (3)“ sind dieselbe." },
+        { n: "N4", t: "Freigegebene Zeilen bleiben in „Offen“ sichtbar, wenn die Venue-Gruppe offene Events hat — sonst wirkt die Gruppenzählung falsch." }
+      ],
+
+      dimRows: [1, 2, 3, 4, 5],
+
+      rights: [
+        { mark: "✓", iconBg: "#16a34a", iconColor: "#fff", color: "#1c1917", label: "Eventdaten" },
+        { mark: "✓", iconBg: "#16a34a", iconColor: "#fff", color: "#1c1917", label: "Tickets" },
+        { mark: "✓", iconBg: "#16a34a", iconColor: "#fff", color: "#1c1917", label: "Inhaberdaten (Name der eintretenden Person)" },
+        { mark: "✕", iconBg: "#a8a29e", iconColor: "#fff", color: "#57534e", label: "Käuferdaten — werden nicht übermittelt" }
+      ],
+
+      fields: [
+        { label: "Freigabe gültig ab", value: "18.08.2026", w: "140px", resolved: "heute", hint: "Ab diesem Datum sieht die Venue das Event — noch keine Tickets." },
+        { label: "Tickets lesbar ab", value: "14 Tage vor Beginn", w: "180px", resolved: "= 21.08.2026", hint: "Verhindert, dass die Venue früh Verkaufszahlen sieht. Testfenster vor dem Event." },
+        { label: "Gültigkeit nach dem Event", value: "7 Tage", w: "140px", resolved: "= endet 11.09.2026", hint: "Danach endet die Freigabe automatisch." }
+      ],
+
+      notes2: [
+        { n: "N5", t: "Empfänger als Info-SectionMessage — die Datenweitergabe wird benannt, bevor der Nutzer Zeiten setzt." },
+        { n: "N6", t: "Die drei Zeitfelder tragen jeweils eine Description; das aufgelöste Datum steht rechts neben dem Feld." },
+        { n: "N7", t: "Primary-Button trägt die Aktion, Secondary den Abbruch — Reihenfolge wie in allen ACC-Drawern." },
+        { n: "N8", t: "Der Drawer öffnet über overlay-backdrop; die Liste bleibt sichtbar, damit der Kontext nicht verloren geht." }
+      ],
+
+      granted: [
+        { k: "Freigabe gültig ab", v: "12.03.2026" },
+        { k: "Tickets lesbar ab", v: "14 Tage vor Beginn = 06.09.2026" },
+        { k: "Freigabe endet", v: "27.09.2026 (7 Tage nach dem Event)" },
+        { k: "Übermittelte Daten", v: "Eventdaten, Tickets, Inhaberdaten" },
+        { k: "Käuferdaten", v: "nicht übermittelt" }
+      ],
+
+      bulkVenues: [
+        { venue: "Kulturhalle Ulm", count: "3 Events", vb: "Stadtwerke Ulm Event GmbH", data: "Eventdaten, Tickets, Inhaberdaten" },
+        { venue: "Stadthalle Kassel", count: "2 Events", vb: "Kassel Event Service GmbH", data: "Eventdaten, Tickets, Inhaberdaten" }
+      ],
+
+      notes4: [
+        { n: "N9", t: "Venues werden getrennt aufgeführt, auch bei gemischter Auswahl — der Nutzer bestätigt zwei Empfänger, nicht „5 Zeilen“." },
+        { n: "N10", t: "Die Datenaussage ist wortgleich mit dem Drawer. Kein Dialog erklärt es kürzer als der andere." },
+        { n: "N11", t: "Bei Teilerfolg: Ergebnisliste pro Event mit Grund, keine Sammelmeldung „fertig“." }
+      ],
+
+      empties: [
+        { tag: "Leerzustand 1 · nichts offen", showTabs: true,
+          head: "Alle Events mit externen Zutrittskontrollen sind freigegeben.",
+          body: "Sobald ein neues Event in einer Venue mit eigener Zutrittskontrolle angelegt wird, erscheint es hier.",
+          link: "14 erteilte Freigaben ansehen",
+          note: "Kein Badge in der Navigation. Positiver Zustand, keine Illustration nötig." },
+        { tag: "Leerzustand 2 · keine Venue mit eigener Zutrittskontrolle", showTabs: false,
+          head: "Für Ihre Events ist derzeit keine Freigabe nötig.",
+          body: "Hier erscheinen Events, die in einer Venue mit eigener Zutrittskontrolle stattfinden. Diese Venues müssen von Reservix einmalig eingerichtet werden.",
+          link: "",
+          note: "Tab bleibt sichtbar, damit die Funktion auffindbar bleibt — erklärt in einem Satz, wann hier etwas erscheint." }
+      ],
+
+      chain: [
+        { level: "Ebene 1 · Zeile", label: "Robert Grün – Tour 2026", badge: "", bare: true, subtle: false, bold: false, underline: "transparent",
+          rule: "Rotes Icon vor dem Eventnamen, Name fett, Badge „Freigabe fehlt“ in der Variante error. Verschwindet in der Sekunde der Freigabe." },
+        { level: "Ebene 2 · Gruppe", label: "Kulturhalle Ulm", badge: "3 brauchen Freigabe", bare: false, subtle: true, bold: false, underline: "transparent",
+          rule: "Der Venue-Header zählt nur die offenen Events der Gruppe. Ohne offene Events kein Badge, nur „2 von 2 freigegeben“." },
+        { level: "Ebene 3 · Tab", label: "Externe Systeme", badge: "3", bare: false, subtle: true, bold: false, underline: "#1c1917",
+          rule: "Der Tab trägt das error-Badge, sobald mindestens ein Event offen ist — auch wenn der Nutzer gerade in einem anderen Einlass-Tab steht." },
+        { level: "Ebene 4 · Top-Level", label: "Einlass", badge: "3", bare: false, subtle: false, bold: true, underline: "transparent",
+          rule: "Zählerpunkt in der Hauptnavigation (destructive-bold), damit die Warnung von jeder Seite im ACC aus sichtbar ist. Summe über alle Venues." }
+      ],
+
+      notesChain: [
+        { n: "N12", t: "Nur eine Warnstufe. Kein warning-Zwischenzustand — entweder ein Event braucht eine Freigabe oder nicht." },
+        { n: "N13", t: "Badge-Zahl = Anzahl offener Events. Bei mehr als 99 „99+“, damit die Navigation nicht springt." },
+        { n: "N14", t: "Tooltip auf dem Badge: „3 Events brauchen eine Freigabe für die Zutrittskontrolle der Venue“ — für Nutzer, die das Symbol allein nicht deuten." }
+      ],
+
+      roles: [
+        { role: "Mit Freigabe-Recht", tag: "kann handeln", tagBg: "#dcfce7", tagColor: "#052e16", badge: true, badgeNote: "Badge sichtbar",
+          action: "Freigeben", actionColor: "#2563eb", actionWeight: "500",
+          hint: "Zeile öffnet den Drawer, Mehrfachauswahl möglich.",
+          rationale: "Vollbild: Warnung, Aktion, ActionBar für die Massenfreigabe." },
+        { role: "Ohne Freigabe-Recht", tag: "nur sehen", tagBg: "#fafaf9", tagColor: "#57534e", badge: true, badgeNote: "Badge sichtbar",
+          action: "keine Aktion", actionColor: "#a8a29e", actionWeight: "400",
+          hint: "Checkboxen und ActionBar entfallen. Zeile öffnet den Drawer read-only.",
+          rationale: "Über der Liste eine SectionMessage: „Zum Freigeben fehlt Ihnen die Berechtigung — zuständig ist [Rolle/Person].“ Warnung bleibt sichtbar, damit sie eskaliert werden kann." }
+      ],
+
+      contract: [
+        { state: "Vertrag gültig", mark: "✓", badgeBg: "#dcfce7", badgeColor: "#052e16", iconBg: "#16a34a",
+          head: "Freigabe uneingeschränkt möglich",
+          body: "Der Mandant hat einen gültigen Nutzungsvertrag für die Datenweitergabe an externe Zutrittskontrollen.",
+          behaviour: "„Venue berechtigen“ aktiv, Massenfreigabe aktiv.",
+          note: "Kein Hinweis in der UI — der Normalfall wird nicht kommentiert." },
+        { state: "Kein Vertrag", mark: "✕", badgeBg: "#fee2e2", badgeColor: "#450a0a", iconBg: "#dc2626",
+          head: "Tab sichtbar, Aktion gesperrt",
+          body: "Events erscheinen in der Liste, damit der Bedarf sichtbar ist — die Freigabe selbst ist gesperrt.",
+          behaviour: "Buttons disabled, daneben „Nutzungsvertrag erforderlich“ mit Kontaktweg zum Reservix-Ansprechpartner.",
+          note: "Kein Badge in der Navigation: eine Warnung, die der Nutzer nicht auflösen kann, erzeugt nur Druck." },
+        { state: "Vertrag abgelaufen", mark: "!", badgeBg: "#fef9c3", badgeColor: "#422006", iconBg: "#a16207",
+          head: "Bestehende Freigaben laufen weiter",
+          body: "Der Mandant hatte einen Vertrag, dieser ist beendet. Bereits erteilte Freigaben bleiben unangetastet.",
+          behaviour: "Neue Freigaben gesperrt, „Entziehen“ bleibt möglich. Warning-SectionMessage über der Liste mit dem Enddatum.",
+          note: "Zu klären mit Recht: ob bestehende Freigaben automatisch enden müssen — das wäre ein Einlass-Ausfall am Eventtag." }
+      ],
+
+      notesContract: [
+        { n: "N15", t: "Die Prüfung sitzt auf Mandanten-Ebene, nicht pro Event — sonst erklärt die UI dieselbe Sperre fünfmal." },
+        { n: "N16", t: "Gesperrte Aktion nie nur ausgrauen: der Grund steht immer daneben, mit dem nächsten Schritt." },
+        { n: "N17", t: "Zweite Sperre unabhängig davon: das Freigabe-Recht des Nutzers (Screen 08). Beide können gleichzeitig gelten — dann gewinnt die Vertragsmeldung." }
+      ],
+
+      pending: [
+        { q: "F1 · Vorschlag in 08", title: "Eigenständiges Freigabe-Recht", body: "Screen 08 zeigt die vorgeschlagene Aufteilung. Zu bestätigen bleibt, ob das Recht eigenständig vergeben wird oder am bestehenden Einlass-Recht hängt." },
+        { q: "F2 offen", title: "Event wurde verschoben", body: "Sobald geklärt ist, ob die Freigabe dem neuen Datum folgt: Zeilen-Badge „Zeiten prüfen“ und eine SectionMessage im Drawer mit alten und neuen Zeitpunkten im Vergleich." }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
